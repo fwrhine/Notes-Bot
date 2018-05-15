@@ -1,7 +1,11 @@
 package advprog.example.bot.controller;
 
-import java.io.IOException;
+import java.util.concurrent.ExecutionException;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.linecorp.bot.client.LineMessagingClient;
+import com.linecorp.bot.client.MessageContentResponse;
 import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.ImageMessageContent;
@@ -12,29 +16,27 @@ import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
 
 import java.util.logging.Logger;
 
+
 @LineMessageHandler
 public class EchoController {
 
     private static final Logger LOGGER = Logger.getLogger(EchoController.class.getName());
 
-//    @EventMapping
-//    public void handleImageMessageEvent(MessageEvent<ImageMessageContent> event) throws IOException {
-//        // You need to install ImageMagick
-//        handleHeavyContent(
-//                event.getReplyToken(),
-//                event.getMessage().getId(),
-//                responseBody -> {
-//                    DownloadedContent jpg = saveContent("jpg", responseBody);
-//                    DownloadedContent previewImg = createTempFile("jpg");
-//                    system(
-//                            "convert",
-//                            "-resize", "240x",
-//                            jpg.path.toString(),
-//                            previewImg.path.toString());
-//                    reply(((MessageEvent) event).getReplyToken(),
-//                            new ImageMessage(jpg.getUri(), jpg.getUri()));
-//                });
-//    }
+    @Autowired
+    private LineMessagingClient lineMessagingClient;
+
+    @EventMapping
+    public MessageContentResponse handleImageMessageEvent(MessageEvent<ImageMessageContent> event) {
+        // You need to install ImageMagick
+        final MessageContentResponse response;
+        try {
+            response = lineMessagingClient.getMessageContent(event.getMessage().getId())
+                    .get();
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+        return response;
+    }
 
     @EventMapping
     public TextMessage handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
