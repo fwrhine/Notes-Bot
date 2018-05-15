@@ -48,14 +48,14 @@ public class NotesControllerTest {
         assertEquals("Lorem Ipsum", reply.getText());
     }
 
-    @Test
-    void testCompVisionApi() {
-        String uri = "https://preview.ibb.co/ixhjvd/data.jpg";
-        String result = notesController.compVisionApi(uri);
-
-        assertEquals("Our greatest glory is not\n in never failing ,\n but "
-                + "in rising every\n time we fall", result);
-    }
+    //    @Test
+    //    void testCompVisionApi() {
+    //        String uri = "https://preview.ibb.co/ixhjvd/data.jpg";
+    //        String result = notesController.compVisionApi(uri);
+    //
+    //        assertEquals("Our greatest glory is not\n in never failing ,\n but "
+    //                + "in rising every\n time we fall", result);
+    //    }
 
     @Test
     void testHandleDefaultMessage() {
