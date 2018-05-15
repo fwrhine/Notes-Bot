@@ -9,14 +9,14 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class BotExampleApplication {
+public class NotesBotApplication {
 
-    private static final Logger LOGGER = Logger.getLogger(BotExampleApplication.class.getName());
-    static Path downloadedContentDir;
+    private static final Logger LOGGER = Logger.getLogger(NotesBotApplication.class.getName());
+    public static Path downloadedContentDir;
 
     public static void main(String[] args) throws IOException {
         LOGGER.info("Application starting ...");
         downloadedContentDir = Files.createTempDirectory("line-bot");
-        SpringApplication.run(BotExampleApplication.class, args);
+        SpringApplication.run(NotesBotApplication.class, args);
     }
 }
