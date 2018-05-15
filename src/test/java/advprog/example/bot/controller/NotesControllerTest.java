@@ -51,10 +51,10 @@ public class NotesControllerTest {
     @Test
     void testCompVisionAPI() {
         String uri = "https://preview.ibb.co/ixhjvd/data.jpg";
-        String result = notesController.compVisionAPI(uri);
+        String result = notesController.compVisionApi(uri);
 
-        assertEquals("Our greatest glory is not\n in never failing ,\n but " +
-                "in rising every\n time we fall", result);
+        assertEquals("Our greatest glory is not\n in never failing ,\n but "
+                + "in rising every\n time we fall", result);
     }
 
     @Test

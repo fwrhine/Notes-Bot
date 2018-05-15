@@ -89,7 +89,8 @@ public class NotesController {
     }
 
     private static DownloadedContent createTempFile(String ext) {
-        String fileName = LocalDateTime.now().toString() + '-' + UUID.randomUUID().toString() + '.' + ext;
+        String fileName = LocalDateTime.now().toString() + '-'
+                + UUID.randomUUID().toString() + '.' + ext;
         Path tempFile = NotesBotApplication.downloadedContentDir.resolve(fileName);
         tempFile.toFile().deleteOnExit();
         return new DownloadedContent(
@@ -97,7 +98,7 @@ public class NotesController {
                 createUri("/downloaded/" + tempFile.getFileName()));
     }
 
-//    @Value
+    //    @Value
     public static class DownloadedContent {
         Path path;
         String uri;
@@ -108,7 +109,7 @@ public class NotesController {
         }
     }
 
-    public String compVisionAPI(String uri) {
+    public String compVisionApi(String uri) {
         String jsonString = "";
         return jsonString;
     }
