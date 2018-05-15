@@ -22,11 +22,13 @@
 //
 //    // Replace or verify the region.
 //    //
-//    // You must use the same region in your REST API call as you used to obtain your subscription keys.
+//    // You must use the same region in your REST API call as you
+// used to obtain your subscription keys.
 //    // For example, if you obtained your subscription keys from the westus region, replace
 //    // "westcentralus" in the URI below with "westus".
 //    //
-//    // NOTE: Free trial subscription keys are generated in the westcentralus region, so if you are using
+//    // NOTE: Free trial subscription keys are generated in the
+// westcentralus region, so if you are using
 //    // a free trial subscription key, you should not need to change this region.
 //    //
 //    // Also, for printed text, set "handwriting" to false.
@@ -39,7 +41,8 @@
 //
 //        try
 //        {
-//            // This operation requrires two REST API calls. One to submit the image for processing,
+//            // This operation requrires two REST API calls.
+// One to submit the image for processing,
 //            // the other to retrieve the text found in the image.
 //            //
 //            // Begin the REST API call to submit the image for processing.
@@ -72,12 +75,14 @@
 //
 //            String operationLocation = null;
 //
-//            // The 'Operation-Location' in the response contains the URI to retrieve the recognized text.
+//            // The 'Operation-Location' in the response contains
+// the URI to retrieve the recognized text.
 //            Header[] responseHeaders = textResponse.getAllHeaders();
 //            for(Header header : responseHeaders) {
 //                if(header.getName().equals("Operation-Location"))
 //                {
-//                    // This string is the URI where you can get the text recognition operation result.
+//                    // This string is the URI where you can get the
+// text recognition operation result.
 //                    operationLocation = header.getValue();
 //                    break;
 //                }
@@ -87,7 +92,8 @@
 //            // async operation that can take a variable amount of time depending on the length
 //            // of the text you want to recognize. You may need to wait or retry this operation.
 //
-//            System.out.println("\nHandwritten text submitted. Waiting 10 seconds to retrieve the recognized text.\n");
+//            System.out.println("\nHandwritten text submitted. Waiting 10 seconds to
+// retrieve the recognized text.\n");
 //            Thread.sleep(10000);
 //
 //            // Execute the second REST API call and get the response.
