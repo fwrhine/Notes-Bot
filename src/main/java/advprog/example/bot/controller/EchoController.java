@@ -2,8 +2,6 @@ package advprog.example.bot.controller;
 
 import java.util.concurrent.ExecutionException;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.linecorp.bot.client.LineMessagingClient;
 import com.linecorp.bot.client.MessageContentResponse;
 import com.linecorp.bot.model.event.Event;
@@ -15,6 +13,8 @@ import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
 
 import java.util.logging.Logger;
+
+import org.springframework.beans.factory.annotation.Autowired;
 
 
 @LineMessageHandler
