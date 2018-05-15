@@ -24,6 +24,8 @@ import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Logger;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -48,8 +50,7 @@ public class NotesController {
         }
 
         DownloadedContent jpg = saveContent("jpg", response);
-
-        return new TextMessage(jpg.uri);
+        return new TextMessage(compVisionApi(jpg.uri));
     }
 
     @EventMapping
@@ -110,7 +111,19 @@ public class NotesController {
     }
 
     public String compVisionApi(String uri) {
-        String jsonString = "";
+        String jsonString = CompVisionAPI.extractHandwriting(uri);
+//        final JSONObject obj = new JSONObject(jsonString);
+//        final JSONArray recognitionResult = obj.getJSONArray("recognitionResult");
+//        final JSONObject linesObj = recognitionResult.getJSONObject(0);
+//        final JSONArray lines = linesObj.getJSONArray("lines");
+//
+//        StringBuilder result = new StringBuilder();
+//
+//        for (int i = 0; i < lines.length(); i++) {
+//            final JSONObject line = lines.getJSONObject(i);
+//            result.append(line.getString("text") + "\n");
+//        }
+//        return result.toString();
         return jsonString;
     }
 }

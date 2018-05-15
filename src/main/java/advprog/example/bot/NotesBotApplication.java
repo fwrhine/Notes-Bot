@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.logging.Logger;
 
+import advprog.example.bot.controller.CompVisionAPI;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -18,5 +19,6 @@ public class NotesBotApplication {
         LOGGER.info("Application starting ...");
         downloadedContentDir = Files.createTempDirectory("line-bot");
         SpringApplication.run(NotesBotApplication.class, args);
+//        CompVisionAPI.extractHandwriting("https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Cursive_Writing_on_Notebook_paper.jpg/800px-Cursive_Writing_on_Notebook_paper.jpg");
     }
 }
