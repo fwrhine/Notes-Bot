@@ -37,7 +37,7 @@ public class NotesController {
     private LineMessagingClient lineMessagingClient;
 
     @EventMapping
-    public String handleImageMessageEvent(MessageEvent<ImageMessageContent> event) {
+    public TextMessage handleImageMessageEvent(MessageEvent<ImageMessageContent> event) {
         // You need to install ImageMagick
         final MessageContentResponse response;
         try {
@@ -49,7 +49,7 @@ public class NotesController {
 
         DownloadedContent jpg = saveContent("jpg", response);
 
-        return jpg.uri;
+        return new TextMessage(jpg.uri);
     }
 
     @EventMapping
