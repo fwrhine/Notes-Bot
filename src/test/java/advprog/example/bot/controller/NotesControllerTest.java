@@ -49,7 +49,7 @@ public class NotesControllerTest {
     }
 
     @Test
-    void testCompVisionAPI() {
+    void testCompVisionApi() {
         String uri = "https://preview.ibb.co/ixhjvd/data.jpg";
         String result = notesController.compVisionApi(uri);
 
