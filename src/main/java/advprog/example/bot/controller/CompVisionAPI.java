@@ -1,11 +1,15 @@
 package advprog.example.bot.controller;
 
+import java.io.File;
+import java.io.InputStream;
 import java.net.URI;
+import java.nio.file.Path;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.InputStreamEntity;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
@@ -35,7 +39,7 @@ public class CompVisionAPI {
     // Also, for printed text, set "handwriting" to false.
     public static final String uriBase = "https://westcentralus.api.cognitive.microsoft.com/vision/v1.0/recognizeText?handwriting=true";
 
-    public static String extractHandwriting(String uriImage) {
+    public static String extractHandwriting(InputStream binaryImage) {
         HttpClient textClient = new DefaultHttpClient();
         HttpClient resultClient = new DefaultHttpClient();
         String result = "";
@@ -50,13 +54,18 @@ public class CompVisionAPI {
             HttpPost textRequest = new HttpPost(uri);
 
             // Request headers. Another valid content type is "application/octet-stream".
-            textRequest.setHeader("Content-Type", "application/json");
+            textRequest.setHeader("Content-Type", "application/octet-stream");
             textRequest.setHeader("Ocp-Apim-Subscription-Key", subscriptionKey);
 
             // Request body.
-            StringEntity requestEntity =
-                    new StringEntity("{\"url\":\"" + uriImage + "\"}");
+            InputStreamEntity requestEntity = new InputStreamEntity(binaryImage, -1);
+//            File file = new File(pathImage);
+//            FileEntity requestEntity = new FileEntity(file);
             textRequest.setEntity(requestEntity);
+
+//            StringEntity requestEntity =
+//                    new StringEntity("{\"url\":\"" + uriImage + "\"}");
+//            textRequest.setEntity(requestEntity);
 
             // Execute the first REST API call to detect the text.
             HttpResponse textResponse = textClient.execute(textRequest);

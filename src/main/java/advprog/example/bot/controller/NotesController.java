@@ -15,6 +15,7 @@ import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UncheckedIOException;
 import java.nio.file.Files;
@@ -49,9 +50,9 @@ public class NotesController {
             throw new RuntimeException(e);
         }
 
-        DownloadedContent jpg = saveContent("jpg", response);
-        System.out.print(jpg.uri);
-        return new TextMessage(compVisionApi(jpg.uri));
+//        DownloadedContent jpg = saveContent("jpg", response);
+        System.out.print(response.getStream());
+        return new TextMessage(compVisionApi(response.getStream()));
     }
 
     @EventMapping
@@ -111,8 +112,8 @@ public class NotesController {
         }
     }
 
-    public String compVisionApi(String uri) {
-        String jsonString = CompVisionAPI.extractHandwriting(uri);
+    public String compVisionApi(InputStream inputStream) {
+        String jsonString = CompVisionAPI.extractHandwriting(inputStream);
 //        final JSONObject obj = new JSONObject(jsonString);
 //        final JSONArray recognitionResult = obj.getJSONArray("recognitionResult");
 //        final JSONObject linesObj = recognitionResult.getJSONObject(0);
