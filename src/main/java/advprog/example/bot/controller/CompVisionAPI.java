@@ -79,7 +79,7 @@ public class CompVisionAPI {
                 JSONObject json = new JSONObject(jsonString);
                 System.out.println("Error:\n");
                 System.out.println(json.toString(2));
-                result = "Error:\n" + json.toString(2);
+                result = json.toString(2);
             }
 
             String operationLocation = null;
@@ -132,7 +132,7 @@ public class CompVisionAPI {
                 //                    resultR.append(line.getString("text") + "\n");
                 //                }
                 //                result = result.toString();
-                result = "Text recognition result response: \n" + json.toString(2);
+                result = json.toString(2);
             }
         }
         catch (Exception e)

@@ -2,6 +2,7 @@ package advprog.example.bot.controller;
 
 import advprog.example.bot.NotesBotApplication;
 
+import com.fasterxml.jackson.core.JsonParser;
 import com.google.common.io.ByteStreams;
 
 import com.linecorp.bot.client.LineMessagingClient;
@@ -25,6 +26,7 @@ import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Logger;
 
+import jdk.nashorn.internal.parser.JSONParser;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,8 +53,8 @@ public class NotesController {
         }
 
 //        DownloadedContent jpg = saveContent("jpg", response);
-        System.out.print(response.getStream());
-        return new TextMessage(compVisionApi(response.getStream()));
+        String result = compVisionApi(response.getStream());
+        return new TextMessage(result);
     }
 
     @EventMapping
@@ -114,18 +116,18 @@ public class NotesController {
 
     public String compVisionApi(InputStream inputStream) {
         String jsonString = CompVisionAPI.extractHandwriting(inputStream);
-//        final JSONObject obj = new JSONObject(jsonString);
-//        final JSONArray recognitionResult = obj.getJSONArray("recognitionResult");
-//        final JSONObject linesObj = recognitionResult.getJSONObject(0);
-//        final JSONArray lines = linesObj.getJSONArray("lines");
-//
-//        StringBuilder result = new StringBuilder();
-//
-//        for (int i = 0; i < lines.length(); i++) {
-//            final JSONObject line = lines.getJSONObject(i);
-//            result.append(line.getString("text") + "\n");
-//        }
-//        return result.toString();
-        return jsonString;
+        final JSONObject obj = new JSONObject(jsonString);
+        final JSONObject recognitionResult = obj.getJSONObject("recognitionResult");
+        final JSONArray lines = recognitionResult.getJSONArray("lines");
+
+        StringBuilder result = new StringBuilder();
+
+        for (int i = 0; i < lines.length(); i++) {
+            JSONObject line = (JSONObject) lines.get(i);
+            String text = line.getString("text");
+
+            result.append(text + "\n");
+        }
+        return result.toString();
     }
 }
