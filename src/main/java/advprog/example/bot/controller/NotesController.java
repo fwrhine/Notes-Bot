@@ -50,6 +50,7 @@ public class NotesController {
         }
 
         DownloadedContent jpg = saveContent("jpg", response);
+        System.out.print(jpg.uri);
         return new TextMessage(compVisionApi(jpg.uri));
     }
 
