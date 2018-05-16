@@ -5,7 +5,6 @@ import com.linecorp.bot.client.MessageContentResponse;
 import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.ImageMessageContent;
-import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
@@ -13,6 +12,7 @@ import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
 import java.io.InputStream;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Logger;
+import java.util.Random;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -38,24 +38,24 @@ public class NotesController {
         }
 
         String result = compVisionApi(response.getStream());
+        if (result.length() < 1) {
+            result = "No text.";
+        }
         return new TextMessage(result);
     }
 
     @EventMapping
-    public TextMessage handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
-        LOGGER.fine(String.format("TextMessageContent(timestamp='%s',content='%s')",
-                event.getTimestamp(), event.getMessage()));
-        TextMessageContent content = event.getMessage();
-        String contentText = content.getText();
-
-        String replyText = contentText.replace("/echo", "");
-        return new TextMessage(replyText.substring(1));
-    }
-
-    @EventMapping
-    public void handleDefaultMessage(Event event) {
+    public TextMessage handleDefaultMessage(Event event) {
         LOGGER.fine(String.format("Event(timestamp='%s',source='%s')",
                 event.getTimestamp(), event.getSource()));
+        String reply;
+        int random = new Random().nextInt();
+        if(random%2==0){
+            reply = "Notes only!";
+        } else{
+            reply = "Please send an image of your handwritten notes!";
+        }
+        return new TextMessage(reply);
     }
 
     public String compVisionApi(InputStream inputStream) {
