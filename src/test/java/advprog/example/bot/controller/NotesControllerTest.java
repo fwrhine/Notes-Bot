@@ -47,23 +47,14 @@ public class NotesControllerTest {
         assertNotNull(notesController);
     }
 
+
     @Test
-    void testHandleTextMessageEvent() {
-        MessageEvent<TextMessageContent> event =
-                EventTestUtil.createDummyTextMessage("/echo Lorem Ipsum");
+    void testCompVisionApi() {
+        String result = notesController.compVisionApi(EventTestUtil.createDummyImageInputStream());
 
-        TextMessage reply = notesController.handleTextMessageEvent(event);
-
-        assertEquals("Lorem Ipsum", reply.getText());
+        assertEquals("Our greatest glory is not\nin never failing ,\nbut "
+                + "in rising every time we fall", result);
     }
-
-        @Test
-        void testCompVisionApi() {
-            String result = notesController.compVisionApi(EventTestUtil.createDummyImageInputStream());
-
-            assertEquals("Our greatest glory is not\nin never failing ,\nbut "
-                    + "in rising every time we fall", result);
-        }
 
     @Test
     void testHandleDefaultMessage() {

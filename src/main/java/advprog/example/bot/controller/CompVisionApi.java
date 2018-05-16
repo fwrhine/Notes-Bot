@@ -3,13 +3,13 @@ package advprog.example.bot.controller;
 import java.io.InputStream;
 import java.net.URI;
 
+import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.InputStreamEntity;
-import org.apache.http.Header;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
@@ -86,8 +86,7 @@ public class CompVisionApi {
                 System.out.println(json.toString(2));
                 result = json.toString(2);
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             result = e.getMessage();
         }

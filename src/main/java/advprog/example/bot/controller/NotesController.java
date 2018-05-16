@@ -10,9 +10,9 @@ import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
 
 import java.io.InputStream;
+import java.util.Random;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Logger;
-import java.util.Random;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -51,9 +51,9 @@ public class NotesController {
                 event.getTimestamp(), event.getSource()));
         String reply;
         int random = new Random().nextInt();
-        if(random%2==0){
+        if (random % 2 == 0) {
             reply = "Notes only!";
-        } else{
+        } else {
             reply = "Please send an image of your handwritten note!";
         }
         return new TextMessage(reply);
@@ -64,26 +64,17 @@ public class NotesController {
         final JSONObject obj = new JSONObject(jsonString);
         StringBuilder result = new StringBuilder();
 
-        if (obj.get("recognitionResult") != null) {
-            final JSONObject recognitionResult = obj.getJSONObject("recognitionResult");
-            final JSONArray lines = recognitionResult.getJSONArray("lines");
+        final JSONObject recognitionResult = obj.getJSONObject("recognitionResult");
+        final JSONArray lines = recognitionResult.getJSONArray("lines");
 
-            for (int i = 0; i < lines.length(); i++) {
-                JSONObject line = (JSONObject) lines.get(i);
-                String text = line.getString("text");
-                if (i > 0) {
-                    result.append("\n");
-                }
-                result.append(text);
+        for (int i = 0; i < lines.length(); i++) {
+            JSONObject line = (JSONObject) lines.get(i);
+            String text = line.getString("text");
+            if (i > 0) {
+                result.append("\n");
             }
-        }
-
-        else if (obj.get("error") != null) {
-            final JSONObject error = obj.getJSONObject("error");
-            String text = error.getString("message");
             result.append(text);
         }
-
         return result.toString();
     }
 }
