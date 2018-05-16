@@ -1,20 +1,16 @@
 package advprog.example.bot.controller;
 
-import java.io.File;
 import java.io.InputStream;
 import java.net.URI;
-import java.nio.file.Path;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.InputStreamEntity;
-import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.apache.http.Header;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class CompVisionAPI {
@@ -59,15 +55,7 @@ public class CompVisionAPI {
 
             // Request body.
             InputStreamEntity requestEntity = new InputStreamEntity(binaryImage, -1);
-//            File file = new File(pathImage);
-//            FileEntity requestEntity = new FileEntity(file);
             textRequest.setEntity(requestEntity);
-
-//            StringEntity requestEntity =
-//                    new StringEntity("{\"url\":\"" + uriImage + "\"}");
-//            textRequest.setEntity(requestEntity);
-
-            // Execute the first REST API call to detect the text.
             HttpResponse textResponse = textClient.execute(textRequest);
 
             // Check for success.
@@ -119,19 +107,6 @@ public class CompVisionAPI {
                 JSONObject json = new JSONObject(jsonString);
                 System.out.println("Text recognition result response: \n");
                 System.out.println(json.toString(2));
-                //                String jsonStringR = json.toString(2);
-                //                final JSONObject obj = new JSONObject(jsonStringR);
-                //                final JSONArray recognitionResult = obj.getJSONArray("recognitionResult");
-                //                final JSONObject linesObj = recognitionResult.getJSONObject(0);
-                //                final JSONArray lines = linesObj.getJSONArray("lines");
-                //
-                //                StringBuilder resultR = new StringBuilder();
-                //
-                //                for (int i = 0; i < lines.length(); i++) {
-                //                    final JSONObject line = lines.getJSONObject(i);
-                //                    resultR.append(line.getString("text") + "\n");
-                //                }
-                //                result = result.toString();
                 result = json.toString(2);
             }
         }

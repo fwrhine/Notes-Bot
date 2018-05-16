@@ -1,10 +1,5 @@
 package advprog.example.bot.controller;
 
-import advprog.example.bot.NotesBotApplication;
-
-import com.fasterxml.jackson.core.JsonParser;
-import com.google.common.io.ByteStreams;
-
 import com.linecorp.bot.client.LineMessagingClient;
 import com.linecorp.bot.client.MessageContentResponse;
 import com.linecorp.bot.model.event.Event;
@@ -15,23 +10,13 @@ import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
 
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.UncheckedIOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.time.LocalDateTime;
-import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Logger;
 
-import jdk.nashorn.internal.parser.JSONParser;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
 
 @LineMessageHandler
 public class NotesController {
@@ -52,7 +37,6 @@ public class NotesController {
             throw new RuntimeException(e);
         }
 
-//        DownloadedContent jpg = saveContent("jpg", response);
         String result = compVisionApi(response.getStream());
         return new TextMessage(result);
     }
@@ -74,46 +58,6 @@ public class NotesController {
                 event.getTimestamp(), event.getSource()));
     }
 
-    private static String createUri(String path) {
-        return ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path(path).build()
-                .toUriString();
-    }
-
-    private static DownloadedContent saveContent(String ext, MessageContentResponse responseBody) {
-        LOGGER.fine(String.format("Got content-type: %s", responseBody));
-
-        DownloadedContent tempFile = createTempFile(ext);
-        try (OutputStream outputStream = Files.newOutputStream(tempFile.path)) {
-            ByteStreams.copy(responseBody.getStream(), outputStream);
-            LOGGER.fine(String.format("Saved %s: %s", ext, tempFile));
-            return tempFile;
-        } catch (IOException e) {
-            throw new UncheckedIOException(e);
-        }
-    }
-
-    private static DownloadedContent createTempFile(String ext) {
-        String fileName = LocalDateTime.now().toString() + '-'
-                + UUID.randomUUID().toString() + '.' + ext;
-        Path tempFile = NotesBotApplication.downloadedContentDir.resolve(fileName);
-        tempFile.toFile().deleteOnExit();
-        return new DownloadedContent(
-                tempFile,
-                createUri("/downloaded/" + tempFile.getFileName()));
-    }
-
-    //    @Value
-    public static class DownloadedContent {
-        Path path;
-        String uri;
-
-        DownloadedContent(Path path, String uri) {
-            this.path = path;
-            this.uri = uri;
-        }
-    }
-
     public String compVisionApi(InputStream inputStream) {
         String jsonString = CompVisionAPI.extractHandwriting(inputStream);
         final JSONObject obj = new JSONObject(jsonString);
@@ -125,8 +69,11 @@ public class NotesController {
         for (int i = 0; i < lines.length(); i++) {
             JSONObject line = (JSONObject) lines.get(i);
             String text = line.getString("text");
-
-            result.append(text + "\n");
+            if (i > 0)
+            {
+                result.append("\n");
+            }
+            result.append(text);
         }
         return result.toString();
     }

@@ -19,6 +19,5 @@ public class NotesBotApplication {
         LOGGER.info("Application starting ...");
         downloadedContentDir = Files.createTempDirectory("line-bot");
         SpringApplication.run(NotesBotApplication.class, args);
-//        CompVisionAPI.extractHandwriting("https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Cursive_Writing_on_Notebook_paper.jpg/800px-Cursive_Writing_on_Notebook_paper.jpg");
     }
 }
