@@ -15,25 +15,8 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
 public class CompVisionApi {
-    // **********************************************
-    // *** Update or verify the following values. ***
-    // **********************************************
 
-    // Replace the subscriptionKey string value with your valid subscription key.
     public static final String subscriptionKey = "e0cdd073c1474e8686684c16bf31a0c8";
-
-    // Replace or verify the region.
-    //
-    // You must use the same region in your REST API call as you
-    // used to obtain your subscription keys.
-    // For example, if you obtained your subscription keys from the westus region, replace
-    // "westcentralus" in the URI below with "westus".
-    //
-    // NOTE: Free trial subscription keys are generated in the
-    // westcentralus region, so if you are using
-    // a free trial subscription key, you should not need to change this region.
-    //
-    // Also, for printed text, set "handwriting" to false.
     public static final String uriBase = "https://westcentralus.api.cognitive.microsoft.com/vision/v1.0/recognizeText?handwriting=true";
 
     public static String extractHandwriting(InputStream binaryImage) {
@@ -50,11 +33,11 @@ public class CompVisionApi {
             URI uri = new URI(uriBase);
             HttpPost textRequest = new HttpPost(uri);
 
-            // Request headers. Another valid content type is "application/octet-stream".
+            // Content type is application/octet-stream for binary image file
             textRequest.setHeader("Content-Type", "application/octet-stream");
             textRequest.setHeader("Ocp-Apim-Subscription-Key", subscriptionKey);
 
-            // Request body.
+            // Request body. Use InputStreamEntity.
             InputStreamEntity requestEntity = new InputStreamEntity(binaryImage, -1);
             textRequest.setEntity(requestEntity);
             HttpResponse textResponse = textClient.execute(textRequest);
@@ -83,10 +66,6 @@ public class CompVisionApi {
                     break;
                 }
             }
-
-            // NOTE: The response may not be immediately available. Handwriting recognition is an
-            // async operation that can take a variable amount of time depending on the length
-            // of the text you want to recognize. You may need to wait or retry this operation.
 
             System.out.println("\nHandwritten text submitted. Waiting 10 seconds to "
                     + "retrieve the recognized text.\n");

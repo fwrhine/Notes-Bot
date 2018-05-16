@@ -41,6 +41,7 @@ public class NotesController {
         if (result.length() < 1) {
             result = "No text.";
         }
+
         return new TextMessage(result);
     }
 
@@ -53,7 +54,7 @@ public class NotesController {
         if(random%2==0){
             reply = "Notes only!";
         } else{
-            reply = "Please send an image of your handwritten notes!";
+            reply = "Please send an image of your handwritten note!";
         }
         return new TextMessage(reply);
     }
@@ -61,19 +62,28 @@ public class NotesController {
     public String compVisionApi(InputStream inputStream) {
         String jsonString = CompVisionApi.extractHandwriting(inputStream);
         final JSONObject obj = new JSONObject(jsonString);
-        final JSONObject recognitionResult = obj.getJSONObject("recognitionResult");
-        final JSONArray lines = recognitionResult.getJSONArray("lines");
-
         StringBuilder result = new StringBuilder();
 
-        for (int i = 0; i < lines.length(); i++) {
-            JSONObject line = (JSONObject) lines.get(i);
-            String text = line.getString("text");
-            if (i > 0) {
-                result.append("\n");
+        if (obj.get("recognitionResult") != null) {
+            final JSONObject recognitionResult = obj.getJSONObject("recognitionResult");
+            final JSONArray lines = recognitionResult.getJSONArray("lines");
+
+            for (int i = 0; i < lines.length(); i++) {
+                JSONObject line = (JSONObject) lines.get(i);
+                String text = line.getString("text");
+                if (i > 0) {
+                    result.append("\n");
+                }
+                result.append(text);
             }
+        }
+
+        else if (obj.get("error") != null) {
+            final JSONObject error = obj.getJSONObject("error");
+            String text = error.getString("message");
             result.append(text);
         }
+
         return result.toString();
     }
 }
