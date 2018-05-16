@@ -2,18 +2,19 @@ package advprog.example.bot.controller;
 
 import java.io.InputStream;
 import java.net.URI;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.InputStreamEntity;
+import org.apache.http.Header;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
-import org.apache.http.Header;
 import org.json.JSONObject;
 
-public class CompVisionAPI {
+public class CompVisionApi {
     // **********************************************
     // *** Update or verify the following values. ***
     // **********************************************
@@ -59,8 +60,7 @@ public class CompVisionAPI {
             HttpResponse textResponse = textClient.execute(textRequest);
 
             // Check for success.
-            if (textResponse.getStatusLine().getStatusCode() != 202)
-            {
+            if (textResponse.getStatusLine().getStatusCode() != 202) {
                 // Format and display the JSON error message.
                 HttpEntity entity = textResponse.getEntity();
                 String jsonString = EntityUtils.toString(entity);
@@ -75,9 +75,8 @@ public class CompVisionAPI {
             // The 'Operation-Location' in the response contains
             // the URI to retrieve the recognized text.
             Header[] responseHeaders = textResponse.getAllHeaders();
-            for(Header header : responseHeaders) {
-                if(header.getName().equals("Operation-Location"))
-                {
+            for (Header header : responseHeaders) {
+                if (header.getName().equals("Operation-Location")) {
                     // This string is the URI where you can get the
                     // text recognition operation result.
                     operationLocation = header.getValue();
@@ -89,8 +88,8 @@ public class CompVisionAPI {
             // async operation that can take a variable amount of time depending on the length
             // of the text you want to recognize. You may need to wait or retry this operation.
 
-            System.out.println("\nHandwritten text submitted. Waiting 10 seconds to " +
-                    "retrieve the recognized text.\n");
+            System.out.println("\nHandwritten text submitted. Waiting 10 seconds to "
+                    + "retrieve the recognized text.\n");
             Thread.sleep(10000);
 
             // Execute the second REST API call and get the response.
@@ -100,8 +99,7 @@ public class CompVisionAPI {
             HttpResponse resultResponse = resultClient.execute(resultRequest);
             HttpEntity responseEntity = resultResponse.getEntity();
 
-            if (responseEntity != null)
-            {
+            if (responseEntity != null) {
                 // Format and display the JSON response.
                 String jsonString = EntityUtils.toString(responseEntity);
                 JSONObject json = new JSONObject(jsonString);
@@ -110,8 +108,7 @@ public class CompVisionAPI {
                 result = json.toString(2);
             }
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             System.out.println(e.getMessage());
             result = e.getMessage();
         }

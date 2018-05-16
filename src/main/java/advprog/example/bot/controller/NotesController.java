@@ -59,7 +59,7 @@ public class NotesController {
     }
 
     public String compVisionApi(InputStream inputStream) {
-        String jsonString = CompVisionAPI.extractHandwriting(inputStream);
+        String jsonString = CompVisionApi.extractHandwriting(inputStream);
         final JSONObject obj = new JSONObject(jsonString);
         final JSONObject recognitionResult = obj.getJSONObject("recognitionResult");
         final JSONArray lines = recognitionResult.getJSONArray("lines");
@@ -69,8 +69,7 @@ public class NotesController {
         for (int i = 0; i < lines.length(); i++) {
             JSONObject line = (JSONObject) lines.get(i);
             String text = line.getString("text");
-            if (i > 0)
-            {
+            if (i > 0) {
                 result.append("\n");
             }
             result.append(text);
