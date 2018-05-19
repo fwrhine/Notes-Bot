@@ -28,7 +28,6 @@ public class NotesController {
 
     @EventMapping
     public TextMessage handleImageMessageEvent(MessageEvent<ImageMessageContent> event) {
-        // You need to install ImageMagick
         final MessageContentResponse response;
         try {
             response = lineMessagingClient.getMessageContent(event.getMessage().getId())

@@ -14,10 +14,13 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
+import org.springframework.beans.factory.annotation.Value;
+
 public class CompVisionApi {
 
-    public static final String subscriptionKey = "e0cdd073c1474e8686684c16bf31a0c8";
-    public static final String uriBase = "https://westcentralus.api.cognitive.microsoft.com/vision/v1.0/recognizeText?handwriting=true";
+    @Value("${subscription-key}")
+    public static String subscriptionKey;
+    public static final String uriBase = "https://southeastasia.api.cognitive.microsoft.com/vision/v1.0/recognizeText?handwriting=true";
 
     public static String extractHandwriting(InputStream binaryImage) {
         HttpClient textClient = new DefaultHttpClient();

@@ -122,5 +122,7 @@ gradle-app.setting
 # gradle/wrapper/gradle-wrapper.properties
 
 .metadata
+application.properties
+application.yml
 
 # End of https://www.gitignore.io/api/java,gradle,kotlin,intellij+all
