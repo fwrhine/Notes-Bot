@@ -34,7 +34,6 @@ public class NotesControllerTest {
         assertNotNull(notesController);
     }
 
-
     @Test
     void testCompVisionApi() {
         String result = notesController.compVisionApi(EventTestUtil.createDummyImageInputStream());

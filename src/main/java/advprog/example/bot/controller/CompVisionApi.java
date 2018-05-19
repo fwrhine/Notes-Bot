@@ -14,13 +14,9 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
-import org.springframework.beans.factory.annotation.Value;
-
 public class CompVisionApi {
 
-    @Value("${subscription-key}")
-    public static String subscriptionKey;
-    public static final String uriBase = "https://westcentralus.api.cognitive.microsoft.com/vision/v1.0/recognizeText?handwriting=true";
+    public static final String uriBase = "https://southeastasia.api.cognitive.microsoft.com/vision/v1.0/recognizeText?handwriting=true";
 
     public static String extractHandwriting(InputStream binaryImage) {
         HttpClient textClient = new DefaultHttpClient();
@@ -38,7 +34,7 @@ public class CompVisionApi {
 
             // Content type is application/octet-stream for binary image file
             textRequest.setHeader("Content-Type", "application/octet-stream");
-            textRequest.setHeader("Ocp-Apim-Subscription-Key", subscriptionKey);
+            textRequest.setHeader("Ocp-Apim-Subscription-Key", GlobalValue.subscriptionKey);
 
             // Request body. Use InputStreamEntity.
             InputStreamEntity requestEntity = new InputStreamEntity(binaryImage, -1);
@@ -76,7 +72,7 @@ public class CompVisionApi {
 
             // Execute the second REST API call and get the response.
             HttpGet resultRequest = new HttpGet(operationLocation);
-            resultRequest.setHeader("Ocp-Apim-Subscription-Key", subscriptionKey);
+            resultRequest.setHeader("Ocp-Apim-Subscription-Key", GlobalValue.subscriptionKey);
 
             HttpResponse resultResponse = resultClient.execute(resultRequest);
             HttpEntity responseEntity = resultResponse.getEntity();
