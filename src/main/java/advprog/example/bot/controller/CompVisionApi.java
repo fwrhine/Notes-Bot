@@ -20,7 +20,7 @@ public class CompVisionApi {
 
     @Value("${subscription-key}")
     public static String subscriptionKey;
-    public static final String uriBase = "https://southeastasia.api.cognitive.microsoft.com/vision/v1.0/recognizeText?handwriting=true";
+    public static final String uriBase = "https://westcentralus.api.cognitive.microsoft.com/vision/v1.0/recognizeText?handwriting=true";
 
     public static String extractHandwriting(InputStream binaryImage) {
         HttpClient textClient = new DefaultHttpClient();
