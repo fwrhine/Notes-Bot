@@ -9,6 +9,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 
 import javax.imageio.ImageIO;
@@ -36,6 +37,17 @@ public class EventTestUtil {
             e.printStackTrace();
         }
         return encodedImage;
+    }
+
+    public static InputStream createDummyTextInputStream() {
+        InputStream encodedString = null;
+        String string = "Yes.";
+        try {
+            encodedString = new ByteArrayInputStream(string.getBytes(StandardCharsets.UTF_8));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return encodedString;
     }
 
 }

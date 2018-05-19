@@ -2,6 +2,7 @@ package advprog.example.bot.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -46,6 +47,14 @@ public class NotesControllerTest {
     }
 
     @Test
+    void testExtractHandwritingError() {
+        String result = CompVisionApi
+                .extractHandwriting(EventTestUtil.createDummyTextInputStream());
+
+        assertEquals("Error.", result);
+    }
+
+    @Test
     void testHandleDefaultMessage() {
         Event event = mock(Event.class);
 
@@ -56,7 +65,7 @@ public class NotesControllerTest {
     }
 
     @Test
-    void testHandleTextMessageEvent() {
+    void testHandleEchoMessageEvent() {
         MessageEvent<TextMessageContent> event =
                 EventTestUtil.createDummyTextMessage("/echo Lorem Ipsum");
 
@@ -65,4 +74,14 @@ public class NotesControllerTest {
         assertEquals("Lorem Ipsum", reply.getText());
     }
 
+    @Test
+    void testHandleTextMessageEvent() {
+        MessageEvent<TextMessageContent> event =
+                EventTestUtil.createDummyTextMessage("Lorem Ipsum");
+
+        TextMessage reply = notesController.handleTextMessageEvent(event);
+
+        assertTrue("Please send an image of your handwritten note!".equals(reply.getText())
+                || "Notes only!".equals(reply.getText()));
+    }
 }

@@ -49,7 +49,8 @@ public class CompVisionApi {
                 JSONObject json = new JSONObject(jsonString);
                 System.out.println("Error:\n");
                 System.out.println(json.toString(2));
-                result = json.toString(2);
+                // result = json.toString(2);
+                return "Error.";
             }
 
             String operationLocation = null;
