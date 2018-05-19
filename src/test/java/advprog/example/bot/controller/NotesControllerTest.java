@@ -9,6 +9,9 @@ import static org.mockito.Mockito.verify;
 import advprog.example.bot.EventTestUtil;
 
 import com.linecorp.bot.model.event.Event;
+import com.linecorp.bot.model.event.MessageEvent;
+import com.linecorp.bot.model.event.message.TextMessageContent;
+import com.linecorp.bot.model.message.TextMessage;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -51,4 +54,15 @@ public class NotesControllerTest {
         verify(event, atLeastOnce()).getSource();
         verify(event, atLeastOnce()).getTimestamp();
     }
+
+    @Test
+    void testHandleTextMessageEvent() {
+        MessageEvent<TextMessageContent> event =
+                EventTestUtil.createDummyTextMessage("/echo Lorem Ipsum");
+
+        TextMessage reply = notesController.handleTextMessageEvent(event);
+
+        assertEquals("Lorem Ipsum", reply.getText());
+    }
+
 }

@@ -5,6 +5,7 @@ import com.linecorp.bot.client.MessageContentResponse;
 import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.ImageMessageContent;
+import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
@@ -48,6 +49,27 @@ public class NotesController {
     public TextMessage handleDefaultMessage(Event event) {
         LOGGER.fine(String.format("Event(timestamp='%s',source='%s')",
                 event.getTimestamp(), event.getSource()));
+
+        return new TextMessage(getRandomReply());
+    }
+
+    @EventMapping
+    public TextMessage handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
+        LOGGER.fine(String.format("TextMessageContent(timestamp='%s',content='%s')",
+                event.getTimestamp(), event.getMessage()));
+        String reply;
+        TextMessageContent content = event.getMessage();
+        String contentText = content.getText();
+        String[] words = contentText.split(" ");
+        if (words[0].equalsIgnoreCase("/echo")) {
+            reply = contentText.replace("/echo", "").substring(1);
+        } else {
+            reply = getRandomReply();
+        }
+        return new TextMessage(reply);
+    }
+
+    public String getRandomReply() {
         String reply;
         int random = new Random().nextInt();
         if (random % 2 == 0) {
@@ -55,7 +77,7 @@ public class NotesController {
         } else {
             reply = "Please send an image of your handwritten note!";
         }
-        return new TextMessage(reply);
+        return reply;
     }
 
     public String compVisionApi(InputStream inputStream) {
