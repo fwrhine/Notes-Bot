@@ -8,7 +8,7 @@ public class GlobalValue {
 
     public static String subscriptionKey;
 
-    @Value("${subscription-key}")
+    @Value("${subscription_key}")
     public void setSubscriptionKey(String value) {
         subscriptionKey = value;
     }
