@@ -18,10 +18,11 @@ Build:
 
 Test:
   stage: test
+  coverage:'/Total.*?([0-9]{1,3})%/'
   script:
-    - gradle check
-    - gradle jacocoTestReport
-    - gradle jacocoTestCoverageVerification
+    - gradle -q check jacocoTestReport
+    - gradle -q jacocoTestCoverageVerification
+    - cat build/reports/jacoco/test/html/index.html
 
 DeployProduction:
   image: ruby:2.4
