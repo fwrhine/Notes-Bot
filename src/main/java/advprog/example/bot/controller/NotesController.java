@@ -73,7 +73,8 @@ public class NotesController {
         String reply;
         int random = new Random().nextInt();
         if (random % 2 == 0) {
-            reply = "Notes only!";
+            reply = "Send me a pic of your handwritten note and I will reply "
+                    + "with a typed version of your notes!";
         } else {
             reply = "Please send an image of your handwritten note!";
         }
