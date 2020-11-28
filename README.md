@@ -29,3 +29,8 @@ And Computer Vision API:
 subscription_key
 endpoint
 ```
+
+## Note
+Repository was imported from Gitlab and designed for Gitlab CI/CD.
+
+Original repo: [https://gitlab.com/fwrhine/notes-bot](https://gitlab.com/fwrhine/notes-bot)
