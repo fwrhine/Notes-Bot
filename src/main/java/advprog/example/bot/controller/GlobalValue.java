@@ -7,10 +7,16 @@ import org.springframework.stereotype.Component;
 public class GlobalValue {
 
     public static String subscriptionKey;
+    public static String endpoint;
 
     @Value("${subscription_key}")
     public void setSubscriptionKey(String value) {
         subscriptionKey = value;
+    }
+
+    @Value("${endpoint}")
+    public void setEndpoint(String value) {
+        endpoint = value;
     }
 
 }

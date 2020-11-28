@@ -42,7 +42,7 @@ public class NotesControllerTest {
     void testCompVisionApi() {
         String result = notesController.compVisionApi(EventTestUtil.createDummyImageInputStream());
 
-        assertEquals("Our greatest glory is not\nin never failing ,\nbut "
+        assertEquals("OUR greatest glory is not\nin never failing\nbut "
                 + "in rising every time we fall", result);
     }
 

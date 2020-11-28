@@ -16,7 +16,7 @@ import org.json.JSONObject;
 
 public class CompVisionApi {
 
-    public static final String uriBase = "https://southeastasia.api.cognitive.microsoft.com/vision/v1.0/recognizeText?handwriting=true";
+    public static final String uriBase = GlobalValue.endpoint + "/vision/v1.0/recognizeText?handwriting=true";
 
     public static String extractHandwriting(InputStream binaryImage) {
         HttpClient textClient = new DefaultHttpClient();
