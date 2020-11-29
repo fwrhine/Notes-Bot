@@ -6,8 +6,10 @@ of your handwritten note and the bot will reply with a typed version of your not
 Built with Spring Framework.
 
 <br>
-<img src="https://gitlab.com/fwrhine/notes-bot/-/raw/master/images/ss1.png" height="430" />
-<img src="https://gitlab.com/fwrhine/notes-bot/-/raw/master/images/ss2.png" height="430" />
+<p float="left">
+  <img src="https://gitlab.com/fwrhine/notes-bot/-/raw/master/images/ss1.png" height="430" />
+  <img src="https://gitlab.com/fwrhine/notes-bot/-/raw/master/images/ss2.png" height="430" />
+</p>
 
 ## How to use
 Add Notes! bot as your friend through QR code or LINE ID:
